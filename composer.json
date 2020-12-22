@@ -1,0 +1,21 @@
+{
+    "name": "mawdoo3com/copyleaks-integration",
+    "description": "This is unofficial SDK package for Copyleaks integration",
+    "type": "package",
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.5.3",
+        "aws/aws-sdk-php": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "MWCopyleaks\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [{
+        "name": "Abd Al-Rahman",
+        "email": "abdalrahman.alzoubi@mawdoo3.com"
+    }],
+    "minimum-stability": "dev"
+}
