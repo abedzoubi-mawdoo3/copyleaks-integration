@@ -61,6 +61,6 @@ class Authentication
         );
         $responseToken = json_decode($response->getBody()->getContents());
 
-        return $responseToken->access_token;
+        return $responseToken;
     }
 }
