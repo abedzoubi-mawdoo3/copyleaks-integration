@@ -1,14 +1,11 @@
 <?php
 
-namespace MWCopyleaks;
+namespace MWCopyleaks\Requests;
 
 use GuzzleHttp\Client as GuzzleClient;
-use MWCopyleaks\Authentication as Authentication;
 
-class Scan
+class Scan extends Request
 {
-    const API_BASE_URI = 'https://api.copyleaks.com';
-
     const API_SCAN_URI = 'v3/businesses/submit/file/';
 
     /**
@@ -30,14 +27,14 @@ class Scan
     }
 
     /**
-     * Authenticate Copyleaks API using client credentials and get token
+     * Send scan request by file
      *
      * @return string
      */
     public function scanByFile($body_base64, $filename, $webhook_link, $scan_id, $sandbox = false)
     {
         // Create a client with a base URI
-        $client = new GuzzleClient(['base_uri' => self::API_BASE_URI]);
+        $client = new GuzzleClient(['base_uri' => parent::API_BASE_URI]);
         $response = $client->request(
             'PUT',
             self::API_SCAN_URI . $scan_id,
