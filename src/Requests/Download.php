@@ -31,11 +31,11 @@ class Download extends Request
      * @param String $scan_id
      * @param String $export_id
      * @param String $webhook_link
-     * @param Array $endpoints
+     * @param String $endpoints
      * 
      * @return string
      */
-    public function export(String $scan_id, String $export_id, String $webhook_link, Array $endpoints)
+    public function export(String $scan_id, String $export_id, String $webhook_link, String $results_endpoint)
     {
         // Create a client with a base URI
         $client = new GuzzleClient(['base_uri' => self::API_BASE_URI]);
@@ -48,18 +48,12 @@ class Download extends Request
                     'Authorization' => 'Bearer ' . $this->access_token
                 ],
                 'json' => [
-                    'results' => [
-                        'id' => "my-result-id",
-                        'verb' => 'POST',
-                        'endpoint' => $endpoints['results']
-                    ],
-                    'pdfReport' => [
-                        'verb' => 'POST',
-                        'endpoint' => $endpoints['pdfReport']
-                    ],
-                    'crawledVersion' => [
-                        'verb' => 'POST',
-                        'endpoint' => $endpoints['crawledVersion']
+                    [
+                        'results' => [
+                            'id' => "my-result-id",
+                            'verb' => 'POST',
+                            'endpoint' => $results_endpoint
+                        ]
                     ],
                     'completionWebhook' => $webhook_link,
                     'maxRetries' => 3
