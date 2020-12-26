@@ -4,7 +4,7 @@ namespace MWCopyleaks\Requests;
 
 use GuzzleHttp\Client as GuzzleClient;
 
-class Scan extends Request
+class Download extends Request
 {
     const API_SCAN_URI = 'v3/downloads/';
 
@@ -27,11 +27,15 @@ class Scan extends Request
     }
 
     /**
-     * Authenticate Copyleaks API using client credentials and get token
-     *
+     * Export downloaded reports
+     * @param String $scan_id
+     * @param String $export_id
+     * @param String $webhook_link
+     * @param Array $endpoints
+     * 
      * @return string
      */
-    public function scanByFile($scan_id, $export_id, $filename, $webhook_link)
+    public function export(String $scan_id, String $export_id, String $webhook_link, Array $endpoints)
     {
         // Create a client with a base URI
         $client = new GuzzleClient(['base_uri' => self::API_BASE_URI]);
@@ -45,15 +49,23 @@ class Scan extends Request
                 ],
                 'json' => [
                     'results' => [
-                        'id' => $result_id,
+                        'id' => "my-result-id",
                         'verb' => 'POST',
-                        'endpoint'
+                        'endpoint' => $endpoints['results']
                     ],
-                    'completionWebhook' => $filename,
+                    'pdfReport' => [
+                        'verb' => 'POST',
+                        'endpoint' => $endpoints['pdfReport']
+                    ],
+                    'crawledVersion' => [
+                        'verb' => 'POST',
+                        'endpoint' => $endpoints['crawledVersion']
+                    ],
+                    'completionWebhook' => $webhook_link,
                     'maxRetries' => 3
                 ]
             ]
         );
-        return $response->getStatusCode();
+        return $response;
     }
 }
