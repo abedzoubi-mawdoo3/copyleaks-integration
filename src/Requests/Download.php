@@ -66,6 +66,6 @@ class Download extends Request
                 ]
             ]
         );
-        return $response;
+        return $response->getStatusCode();
     }
 }
